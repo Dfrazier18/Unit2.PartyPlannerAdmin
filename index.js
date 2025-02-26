@@ -132,8 +132,9 @@ function SelectedParty() {
     <button>Remove Party</button>
   `;
   $party.querySelector("GuestList").replaceWith(GuestList());
+
   const $delete = $party.querySelector("button");
-  $delete.addEventListener("click", () => removeArtist(selectedParty.id));
+  $delete.addEventListener("click", () => removeParty(selectedParty.id));
 
   return $party;
 }
@@ -184,10 +185,12 @@ function NewPartyForm() {
     event.preventDefault();
 
     const data = new FormData($form);
+    const rawDate = data.get("date");
+    const isoDate = new Date(rawDate).toISOString();
     addParty({
       name: data.get("name"),
       description: data.get("description"),
-      date: data.get("date"),
+      date: isoDate,
       location: data.get("location"),
     });
   });
